@@ -1,0 +1,175 @@
+-----------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\apporto.com\dfs\DVD\Users\damurphy_dvd\Desktop\Lab2\lab02.txt
+  log type:  text
+ opened on:   7 Sep 2020, 19:29:30
+
+. use cpsmar2016.dta;
+
+. tab a_maritl if a_sex == 2 & 30 <= a_age & a_age < 40;
+
+              Item 18e - Marital status |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+      Married - civilian spouse present |      8,179       59.87       59.87
+            Married - AF spouse present |        201        1.47       61.34
+Married - spouse absent (exc. separated |        216        1.58       62.92
+                                Widowed |        111        0.81       63.74
+                               Divorced |      1,147        8.40       72.13
+                              Separated |        449        3.29       75.42
+                          Never married |      3,358       24.58      100.00
+----------------------------------------+-----------------------------------
+                                  Total |     13,661      100.00
+
+. tab a_maritl if a_sex == 1 & 30 <= a_age & a_age < 40;
+
+              Item 18e - Marital status |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+      Married - civilian spouse present |      7,257       60.62       60.62
+            Married - AF spouse present |         14        0.12       60.73
+Married - spouse absent (exc. separated |        206        1.72       62.45
+                                Widowed |         28        0.23       62.69
+                               Divorced |        748        6.25       68.94
+                              Separated |        217        1.81       70.75
+                          Never married |      3,502       29.25      100.00
+----------------------------------------+-----------------------------------
+                                  Total |     11,972      100.00
+
+. sum wsal_val if peioocc==3850 & wsal_val>0 & a_wkstat == 2, detail;
+
+           Recode - Total wage and salary earning
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%        17000          12000
+ 5%        34000          12000
+10%        40000          15000       Obs                 379
+25%        50000          17000       Sum of Wgt.         379
+
+50%        69000                      Mean           72771.04
+                        Largest       Std. Dev.      30702.59
+75%        90000         168000
+90%       120000         168000       Variance       9.43e+08
+95%       130000         180000       Skewness       .8662363
+99%       168000         180000       Kurtosis       3.743018
+
+. sum wsal_val if peioocc==4760 & wsal_val>0 & a_wkstat == 2, detail;
+
+           Recode - Total wage and salary earning
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%         2000             50
+ 5%         9000            400
+10%        12000            600       Obs                 982
+25%        20000           1000       Sum of Wgt.         982
+
+50%        32000                      Mean           46860.91
+                        Largest       Std. Dev.      58707.21
+75%        56000         400000
+90%        90000         550000       Variance       3.45e+09
+95%       117000         600000       Skewness       8.542173
+99%       250000        1099999       Kurtosis         124.58
+
+. sum wsal_val if peioocc==120 & wsal_val>0 & a_wkstat == 2, detail;
+
+           Recode - Total wage and salary earning
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%        16000           1700
+ 5%        29000           6715
+10%        35000           9500       Obs                 644
+25%        48000          12002       Sum of Wgt.         644
+
+50%        75000                      Mean           99958.98
+                        Largest       Std. Dev.      106781.7
+75%       117320         810000
+90%       175000        1000000       Variance       1.14e+10
+95%       250000        1000000       Skewness       5.110435
+99%       600000        1099999       Kurtosis       38.19058
+
+. tab peioocc if peioocc==100;
+
+                             Occupation |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+       Administrative services managers |        121      100.00      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        121      100.00
+
+. sum wsal_val if peioocc==100 & wsal_val>0 & a_wkstat == 2, detail;
+
+           Recode - Total wage and salary earning
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%        14000            600
+ 5%        31000          14000
+10%        35000          18000       Obs                 111
+25%        45000          25000       Sum of Wgt.         111
+
+50%        65000                      Mean           76213.65
+                        Largest       Std. Dev.      53449.63
+75%        88803         228000
+90%       112000         250000       Variance       2.86e+09
+95%       210000         300000       Skewness       2.564196
+99%       300000         340000       Kurtosis       11.01393
+
+. tab peioocc if peioocc==1050;
+
+                             Occupation |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+           Computer support specialists |        306      100.00      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        306      100.00
+
+. sum wsal_val if peioocc==1050 & wsal_val>0 & a_wkstat == 2, detail;
+
+           Recode - Total wage and salary earning
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%         7225           2312
+ 5%        18000           7000
+10%        25000           7225       Obs                 273
+25%        38800           9500       Sum of Wgt.         273
+
+50%        55000                      Mean           65583.15
+                        Largest       Std. Dev.      44249.85
+75%        80000         225000
+90%       120000         250000       Variance       1.96e+09
+95%       150000         270000       Skewness       1.872052
+99%       250000         270000       Kurtosis       7.647556
+
+. histogram wsal_val if peioocc==3850 & wsal_val>0 & a_wkstat == 2, normal;
+(bin=19, start=12000, width=8842.1053)
+
+. histogram wsal_val if peioocc==4760 & wsal_val>0 & a_wkstat == 2, normal;
+(bin=29, start=50, width=37929.276)
+
+. histogram wsal_val if peioocc==120 & wsal_val>0 & a_wkstat == 2, normal;
+(bin=25, start=1700, width=43931.96)
+
+. histogram wsal_val if peioocc==100 & wsal_val>0 & a_wkstat == 2, normal;
+(bin=10, start=600, width=33940)
+
+. histogram wsal_val if peioocc==1050 & wsal_val>0 & a_wkstat == 2, normal;
+(bin=16, start=2312, width=16730.5)
+
+.  gen nevermarried = 0;
+
+. replace nevermarried=1 if a_maritl ==7;
+(86,613 real changes made)
+
+. ci proportions nevermarried if a_sex==2, level(99);
+
+                                                         -- Binomial Exact --
+    Variable |        Obs  Proportion    Std. Err.       [99% Conf. Interval]
+-------------+---------------------------------------------------------------
+nevermarried |     95,519    .4427705    .0016072        .4386285    .4469183
+
+. /* we can be 99% confident that the population proportion of women who have 
+>         have never been married will lie between 43.86% and 44.69% */
+> 
+> 
+> 
+> log close;
+      name:  <unnamed>
+       log:  \\apporto.com\dfs\DVD\Users\damurphy_dvd\Desktop\Lab2\lab02.txt
+  log type:  text
+ closed on:   7 Sep 2020, 19:29:40
+-----------------------------------------------------------------------------------------
