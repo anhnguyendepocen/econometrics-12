@@ -1,2 +1,2 @@
 # econometrics
-stata and R code for econometric labs
+stata code for econometric labs
