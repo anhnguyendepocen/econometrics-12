@@ -1,0 +1,207 @@
+------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\apporto.com\dfs\DVD\Users\damurphy_dvd\Desktop\Lab6\lab06.txt
+  log type:  text
+ opened on:  26 Oct 2020, 20:24:54
+
+. /* 8.1 questions (a) through (g) */
+> use cps92_08.dta;
+
+. describe;
+
+Contains data from cps92_08.dta
+  obs:        15,316                          
+ vars:             5                          15 Feb 2010 11:22
+------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------
+year            float   %10.0g                
+ahe             float   %9.0g                 
+bachelor        float   %9.0g                 
+female          float   %9.0g                 
+age             float   %9.0g                 
+------------------------------------------------------------------------------------------
+Sorted by: 
+
+. /* (a) */
+> reg ahe age female bachelor, r;
+
+Linear regression                               Number of obs     =     15,316
+                                                F(3, 15312)       =     896.94
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1764
+                                                Root MSE          =     8.1637
+
+------------------------------------------------------------------------------
+             |               Robust
+         ahe |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .4529881   .0235907    19.20   0.000     .4067475    .4992286
+      female |   -2.80451   .1314131   -21.34   0.000    -3.062096   -2.546925
+    bachelor |   6.935999   .1416315    48.97   0.000     6.658385    7.213614
+       _cons |   .0818571   .7012352     0.12   0.907    -1.292647    1.456362
+------------------------------------------------------------------------------
+
+. scalar age_coef = _b[age];
+
+. scalar age_diff_1 = (age_coef*26) - (age_coef*25);
+
+. display age_diff_1;
+.45298806
+
+. scalar age_diff_2 = (age_coef*34) - (age_coef*33);
+
+. /* the difference between both 34x33 and 26x25 should be the same. */
+> display age_diff_2 == age_diff_1;
+1
+
+.  /* A one-unit change in age is associated with a .4529 unit increase in Average Hourly 
+> Earnings.*/
+> 
+> /* (b) */
+> gen ln_ahe = ln(ahe);
+
+. reg ln_ahe age female bachelor, r;
+
+Linear regression                               Number of obs     =     15,316
+                                                F(3, 15312)       =    1110.55
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1830
+                                                Root MSE          =     .50575
+
+------------------------------------------------------------------------------
+             |               Robust
+      ln_ahe |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .0255529   .0014465    17.67   0.000     .0227176    .0283881
+      female |  -.1771872   .0082412   -21.50   0.000    -.1933409   -.1610335
+    bachelor |   .4456978    .008326    53.53   0.000     .4293778    .4620178
+       _cons |    1.70089   .0434851    39.11   0.000     1.615654    1.786126
+------------------------------------------------------------------------------
+
+. scalar age_coef_2 = _b[age];
+
+. scalar ln_age_diff_1 = (age_coef_2*26) - (age_coef_2*25);
+
+. display ln_age_diff_1;
+.02555287
+
+. scalar ln_age_diff_2 = (age_coef_2*34) - (age_coef_2*33);
+
+. display ln_age_diff_2;
+.02555287
+
+. /* the difference between both 34x33 and 26x25 should be the same. */
+> display round(ln_age_diff_2, .0000001) == round(ln_age_diff_1, .0000001);
+1
+
+.  /* A one-unit change in age is associated with a 2.56% increase in average hourly earni
+> ngs. */
+> 
+> /* (c) */
+> gen ln_age = ln(age);
+
+. reg ln_ahe ln_age female bachelor, r;
+
+Linear regression                               Number of obs     =     15,316
+                                                F(3, 15312)       =    1110.58
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1831
+                                                Root MSE          =     .50572
+
+------------------------------------------------------------------------------
+             |               Robust
+      ln_ahe |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      ln_age |   .7532286   .0424533    17.74   0.000     .6700151    .8364421
+      female |  -.1771624   .0082403   -21.50   0.000    -.1933145   -.1610103
+    bachelor |   .4457561   .0083259    53.54   0.000     .4294364    .4620758
+       _cons |  -.0910657   .1439684    -0.63   0.527    -.3732608    .1911295
+------------------------------------------------------------------------------
+
+. scalar ln_age_coef = _b[ln_age];
+
+. scalar ln_ln_age_diff_1 = (ln_age_coef*26) - (ln_age_coef*25);
+
+. display ln_ln_age_diff_1;
+.7532286
+
+. scalar ln_ln_age_diff_2 = (ln_age_coef*34) - (ln_age_coef*33);
+
+. display ln_ln_age_diff_2;
+.7532286
+
+. /* the difference between both 34x33 and 26x25 should be the same. */
+> display ln_ln_age_diff_2 == ln_ln_age_diff_1;
+1
+
+.  /* A 1% change in age is associated with a .75% increase in Average Hourly Earnings. */
+> 
+> /* (d) */
+> reg ln_ahe c.age c.age#c.age female bachelor, r;
+
+Linear regression                               Number of obs     =     15,316
+                                                F(4, 15311)       =     832.60
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1831
+                                                Root MSE          =     .50571
+
+------------------------------------------------------------------------------
+             |               Robust
+      ln_ahe |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .0880461   .0335819     2.62   0.009     .0222215    .1538707
+             |
+ c.age#c.age |  -.0010569   .0005678    -1.86   0.063    -.0021698     .000056
+             |
+      female |   -.177146   .0082397   -21.50   0.000    -.1932968   -.1609951
+    bachelor |   .4458243   .0083273    53.54   0.000     .4295017    .4621468
+       _cons |   .7855161   .4930494     1.59   0.111    -.1809194    1.751952
+------------------------------------------------------------------------------
+
+. margins, dydx(*);
+
+Average marginal effects                        Number of obs     =     15,316
+Model VCE    : Robust
+
+Expression   : Linear prediction, predict()
+dy/dx w.r.t. : age female bachelor
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .0253849   .0014502    17.50   0.000     .0225422    .0282275
+      female |   -.177146   .0082397   -21.50   0.000    -.1932968   -.1609951
+    bachelor |   .4458243   .0083273    53.54   0.000     .4295017    .4621468
+------------------------------------------------------------------------------
+
+. display (
+>         _b[age]*26 + _b[c.age#c.age]*(26*26)
+> ) - (
+>         _b[age]*25 + _b[c.age#c.age]*(25*25)
+> );
+.03414399
+
+. display (
+>         _b[age]*34 + _b[c.age#c.age]*(34*34)
+> ) - (
+>         _b[age]*33 + _b[c.age#c.age]*(33*33)
+> );
+.01723352
+
+. /* A one-unit change in age is associated with a 2.54% increase in average hourly earnin
+> gs. */
+> 
+> /*
+> (e), (f), (g) -> look at the fit of the regression, RMSE, coefficients
+> 
+> */
+> 
+> log close;
+      name:  <unnamed>
+       log:  \\apporto.com\dfs\DVD\Users\damurphy_dvd\Desktop\Lab6\lab06.txt
+  log type:  text
+ closed on:  26 Oct 2020, 20:24:54
+------------------------------------------------------------------------------------------
