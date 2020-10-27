@@ -1,0 +1,232 @@
+--------------------------------------------------------
+      name:  <unnamed>
+       log:  \\apporto.com\dfs\DVD\Users\damurphy_dvd\De
+> sktop\Lab5\lab05.txt
+  log type:  text
+ opened on:   9 Oct 2020, 11:14:14
+
+. use cps92_08.dta;
+
+. drop if year==1992;
+(7,605 observations deleted)
+
+. sum;
+
+    Variable |        Obs        Mean    Std. Dev.      
+>  Min        Max
+-------------+------------------------------------------
+> ---------------
+        year |      7,711        2008           0       
+> 2008       2008
+         ahe |      7,711    18.97609    10.13944   2.00
+> 3205   82.41758
+    bachelor |      7,711    .4810012    .4996713       
+>    0          1
+      female |      7,711    .4326287    .4954724       
+>    0          1
+         age |      7,711    29.57723    2.855258       
+>   25         34
+
+. /* A. */
+> reg ahe age, r;
+
+Linear regression                               Number o
+> f obs     =      7,711
+                                                F(1, 770
+> 9)        =     225.70
+                                                Prob > F
+>           =     0.0000
+                                                R-square
+> d         =     0.0290
+                                                Root MSE
+>           =     9.9919
+
+--------------------------------------------------------
+> ----------------------
+             |               Robust
+         ahe |      Coef.   Std. Err.      t    P>|t|   
+>   [95% Con                                            
+>           f. Interval]
+-------------+------------------------------------------
+> ----------------------
+         age |   .6049863   .0402701    15.02   0.000   
+>    .526046                                            
+>               .6839266
+       _cons |   1.082275   1.167013     0.93   0.354   
+>  -1.205388                                            
+>               3.369938
+--------------------------------------------------------
+> ----------------------
+
+. scalar first = _b[age];
+
+. scalar r2_one = e(r2_a);
+
+. /* the estimated slope is .6049863 and the estimate in
+> tercept is 1.0822 */
+> 
+> /* B. */
+> reg ahe age female bach, r;
+
+Linear regression                               Number o
+> f obs     =      7,711
+                                                F(3, 770
+> 7)        =     555.48
+                                                Prob > F
+>           =     0.0000
+                                                R-square
+> d         =     0.1998
+                                                Root MSE
+>           =     9.0718
+
+--------------------------------------------------------
+> ----------------------
+             |               Robust
+         ahe |      Coef.   Std. Err.      t    P>|t|   
+>   [95% Con                                            
+>           f. Interval]
+-------------+------------------------------------------
+> ----------------------
+         age |   .5852144   .0365302    16.02   0.000   
+>   .5136052                                            
+>               .6568236
+      female |  -3.664026   .2076129   -17.65   0.000   
+>  -4.071003                                            
+>              -3.257048
+    bachelor |   8.083001   .2126945    38.00   0.000   
+>   7.666062                                            
+>                8.49994
+       _cons |  -.6356977   1.083075    -0.59   0.557   
+>  -2.758818                                            
+>               1.487423
+--------------------------------------------------------
+> ----------------------
+
+. scalar second = _b[age];
+
+. scalar r2_two = e(r2_a);
+
+. scalar se = ((.0402701)^2 + (.0365302)^2)^.5;
+
+. /* estimated effect of age on earnings? .5852144 
+>    95% confidence interval for coefficient on age
+> */
+> di _b[age] - invttail(e(df_r), .025)*_se[age];
+.51360522
+
+. di _b[age] + invttail(e(df_r), .025)*_se[age];
+.65682362
+
+. /* C. */
+> /*
+> are results of the regression in b substantially diffe
+> rent from a
+> regarding the effects of age and AHE? Does the regress
+> ion in a seem
+> to suffer from OVB?
+> */
+> scalar diff = first - second;
+
+. display normal(diff/se);
+.64194093
+
+. display diff/se;
+.36365167
+
+. /*
+> Z-score is .36, which is less than 1.96 so not signifi
+> cantly different.
+> */
+> 
+> 
+> /* D. */
+> /* Bob: 26 YO, male, high school diploma */
+> 
+> scalar bob = .4529881*26 + 0 + 0;
+
+. display bob;
+11.777691
+
+. /* Alexis: 30 YO, female, college degress */
+> scalar alexis = .4529881*30 + -2.80451*1 + 6.935999*1;
+
+. display alexis;
+17.721132
+
+. /* E. */
+> di r2_one;
+.02889782
+
+. di r2_two;
+.19949969
+
+. /* The R2 and adjusted R2 values for regression b are 
+> similar because 
+>    we added variables that account for lots of the var
+> iance in average
+>    hourly earnings. This means that the variables we a
+> dded 'fit' the model
+>    and are not penalized by the adjusted R2 equation.
+> */
+> 
+> /* F. */
+> test female;
+
+ ( 1)  female = 0
+
+       F(  1,  7707) =  311.46
+            Prob > F =    0.0000
+
+. display 1-chi2(1, 1*311.46);
+0
+
+. test bachelor;
+
+ ( 1)  bachelor = 0
+
+       F(  1,  7707) = 1444.22
+            Prob > F =    0.0000
+
+. display 1-chi2(1, 1*1444.22);
+0
+
+. test female bachelor;
+
+ ( 1)  female = 0
+ ( 2)  bachelor = 0
+
+       F(  2,  7707) =  780.60
+            Prob > F =    0.0000
+
+. display 1-chi2(2, 2*780.60);
+0
+
+. /*
+> Given that the the F value is 0 for each test, we reje
+> ct the null in each scenario
+> and conclude that you cannot remove these variables fr
+> om the regression.
+> */
+> 
+> /* G. */
+> /*
+> Conditions:
+> 1. When there is correlation between your error term a
+> nd Y (meaning the omitted variable is captured in the 
+> error term)
+> 2. When the omitted variable is correlated with the in
+> cluded regressor (X)
+> */
+> /*
+> These conditions hold for the first regression we ran 
+> (AHE on age). This is shown by the change in the age c
+> oefficient and F tests. 
+> */
+> 
+> log close;
+      name:  <unnamed>
+       log:  \\apporto.com\dfs\DVD\Users\damurphy_dvd\De
+> sktop\Lab5\lab05.txt
+  log type:  text
+ closed on:   9 Oct 2020, 11:14:15
+--------------------------------------------------------
