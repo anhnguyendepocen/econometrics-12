@@ -1,8 +1,8 @@
-------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
       name:  <unnamed>
        log:  \\apporto.com\dfs\DVD\Users\damurphy_dvd\Desktop\Lab7\lab07.txt
   log type:  text
- opened on:  10 Nov 2020, 07:06:25
+ opened on:  10 Nov 2020, 10:36:44
 
 . use Guns.dta;
 
@@ -27,7 +27,8 @@ Linear regression                               Number of obs     =      1,173
 . dis "Adjusted R-squared is " _result(8);
 Adjusted R-squared is .08585959
 
-. global reg_variables "
+. /* i. */
+> global reg_variables "
 > incarc_rate density avginc pop pb1064
 >         pw1064 pm1029";
 
@@ -57,17 +58,28 @@ Linear regression                               Number of obs     =      1,173
 . dis "Adjust R-squared is " _result(8);
 Adjust R-squared is .56126055
 
-. /* the presence of shall laws decreases violent vrimes by 44% on average or 
-> 36% with all else held equal. Both regressions are statistically significant
-> .*/
+. /* the presence of shall laws decreases violent vrimes by 44% on average or 36% w
+> ith all else held equal. Both regressions are statistically significant.*/
 > 
 > /* ii. two-sample ttest */
-> 
-> /* iii. the culture around gun usage in a state may not vary over time. For 
-> example, it is more common to carry guns in states that have open carry laws
-> , and that culture may vary little over time within the state but varies sig
-> nificantly across states (Texas has a much different perception of guns than
->  Rhode Island).*/
+> test $reg_variables shall;
+
+ ( 1)  incarc_rate = 0
+ ( 2)  density = 0
+ ( 3)  avginc = 0
+ ( 4)  pop = 0
+ ( 5)  pb1064 = 0
+ ( 6)  pw1064 = 0
+ ( 7)  pm1029 = 0
+ ( 8)  shall = 0
+
+       F(  8,  1164) =   95.67
+            Prob > F =    0.0000
+
+. /* iii. the culture around gun usage in a state may not vary over time. For examp
+> le, it is more common to carry guns in states that have open carry laws, and that
+>  culture may vary little over time within the state but varies significantly acro
+> ss states (Texas has a much different perception of guns than Rhode Island).*/
 > 
 > /* b. */
 > 
@@ -129,11 +141,10 @@ Adjust R-squared is .56126055
 ------------+-----------------------------------
       Total |      1,173      100.00
 
-. global statevars "stt1 stt2 stt3 stt4 stt5 stt6 stt7 stt8 stt9 stt10 stt11 s
-> tt12 stt13 stt14 stt15 stt16 stt17 stt18 stt19 stt20 stt21 stt22 stt23 stt24
->  stt25 stt26 stt27 stt28 stt29 stt30 stt31 stt32 stt33 stt34 stt35 stt36 stt
-> 37 stt38 stt39 stt40 stt41 stt42 stt43 stt44 stt45 stt46 stt47 stt48 stt49 s
-> tt50";
+. global statevars "stt1 stt2 stt3 stt4 stt5 stt6 stt7 stt8 stt9 stt10 stt11 stt12 
+> stt13 stt14 stt15 stt16 stt17 stt18 stt19 stt20 stt21 stt22 stt23 stt24 stt25 stt
+> 26 stt27 stt28 stt29 stt30 stt31 stt32 stt33 stt34 stt35 stt36 stt37 stt38 stt39 
+> stt40 stt41 stt42 stt43 stt44 stt45 stt46 stt47 stt48 stt49 stt50";
 
 . dis 1 - chi2(50, 210.38*50);
 0
@@ -147,464 +158,267 @@ Adjust R-squared is .56126055
 
 . xtsum;
 
-Variable         |      Mean   Std. Dev.       Min        Max |    Observation
-> s
------------------+--------------------------------------------+---------------
-> -
-year     overall |        88   6.636079         77         99 |     N =    117
-> 3
-         between |                    0         88         88 |     n =      5
-> 1
-         within  |             6.636079         77         99 |     T =      2
-> 3
-                 |                                            |
-vio      overall |  503.0747   334.2772         47     2921.8 |     N =    117
-> 3
-         between |             319.4892   68.00435   2048.978 |     n =      5
-> 1
-         within  |             107.6286  -134.2036   1375.896 |     T =      2
-> 3
-                 |                                            |
-mur      overall |  7.665132    7.52271         .2       80.6 |     N =    117
-> 3
-         between |             6.872038   1.278261   49.27391 |     n =      5
-> 1
-         within  |             3.201989  -18.10878   38.99122 |     T =      2
-> 3
-                 |                                            |
-rob      overall |  161.8202     170.51        6.4     1635.1 |     N =    117
-> 3
-         between |             164.9097    9.36087   1069.813 |     n =      5
-> 1
-         within  |             48.87655  -263.6928   727.1071 |     T =      2
-> 3
-                 |                                            |
-incarc~e overall |  226.5797   178.8881         19       1913 |     N =    117
-> 3
-         between |             136.6396   59.73913   980.8696 |     n =      5
-> 1
-         within  |              116.966  -424.2899    1158.71 |     T =      2
-> 3
-                 |                                            |
-pb1064   overall |  5.336217   4.885688   .2482066   26.97957 |     N =    117
-> 3
-         between |             4.904879   .4780231   24.92603 |     n =      5
-> 1
-         within  |             .5135176   3.119451   7.389752 |     T =      2
-> 3
-                 |                                            |
-pw1064   overall |  62.94543   9.761527   21.78043   76.52575 |     N =    117
-> 3
-         between |             9.766202   24.86751   74.06575 |     n =      5
-> 1
-         within  |             1.303495   58.99112   67.95798 |     T =      2
-> 3
-                 |                                            |
-pm1029   overall |  16.08113   1.732143   12.21368   22.35269 |     N =    117
-> 3
-         between |             .7393875   14.19916   18.32288 |     n =      5
-> 1
-         within  |             1.569678   12.72155   20.25466 |     T =      2
-> 3
-                 |                                            |
-pop      overall |  4.816341   5.252115    .402753   33.14512 |     N =    117
-> 3
-         between |             5.259351   .4739457   28.11234 |     n =      5
-> 1
-         within  |             .6657071  -.9435976   9.849123 |     T =      2
-> 3
-                 |                                            |
-avginc   overall |   13.7248   2.554543   8.554884   23.64671 |     N =    117
-> 3
-         between |              2.05518   9.972052   18.82278 |     n =      5
-> 1
-         within  |             1.543116   9.329032   18.65322 |     T =      2
-> 3
-                 |                                            |
-density  overall |  .3520382   1.355472   .0007071   11.10212 |     N =    117
-> 3
-         between |             1.364854   .0009259   9.773243 |     n =      5
-> 1
-         within  |             .0971811  -.9130092   1.680911 |     T =      2
-> 3
-                 |                                            |
-stateid  overall |  28.96078   15.68352          1         56 |     N =    117
-> 3
-         between |             15.83283          1         56 |     n =      5
-> 1
-         within  |                    0   28.96078   28.96078 |     T =      2
-> 3
-                 |                                            |
-shall    overall |  .2429668   .4290581          0          1 |     N =    117
-> 3
-         between |             .3031251          0          1 |     n =      5
-> 1
-         within  |             .3064814  -.5396419   1.112532 |     T =      2
-> 3
-                 |                                            |
-ln_vio~e overall |  6.027293   .6456943   3.850147   7.979955 |     N =    117
-> 3
-         between |             .6268226   4.201971   7.600531 |     n =      5
-> 1
-         within  |              .177172   5.511784   6.669583 |     T =      2
-> 3
-                 |                                            |
-stt1     overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt2     overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt3     overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt4     overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt5     overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt6     overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt7     overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt8     overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt9     overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt10    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt11    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt12    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt13    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt14    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt15    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt16    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt17    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt18    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt19    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt20    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt21    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt22    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt23    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt24    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt25    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt26    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt27    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt28    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt29    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt30    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt31    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt32    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt33    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt34    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt35    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt36    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt37    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt38    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt39    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt40    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt41    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt42    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt43    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt44    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt45    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt46    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt47    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt48    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt49    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt50    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
-                 |                                            |
-stt51    overall |  .0196078   .1387075          0          1 |     N =    117
-> 3
-         between |              .140028          0          1 |     n =      5
-> 1
-         within  |                    0   .0196078   .0196078 |     T =      2
-> 3
+Variable         |      Mean   Std. Dev.       Min        Max |    Observations
+-----------------+--------------------------------------------+----------------
+year     overall |        88   6.636079         77         99 |     N =    1173
+         between |                    0         88         88 |     n =      51
+         within  |             6.636079         77         99 |     T =      23
+                 |                                            |
+vio      overall |  503.0747   334.2772         47     2921.8 |     N =    1173
+         between |             319.4892   68.00435   2048.978 |     n =      51
+         within  |             107.6286  -134.2036   1375.896 |     T =      23
+                 |                                            |
+mur      overall |  7.665132    7.52271         .2       80.6 |     N =    1173
+         between |             6.872038   1.278261   49.27391 |     n =      51
+         within  |             3.201989  -18.10878   38.99122 |     T =      23
+                 |                                            |
+rob      overall |  161.8202     170.51        6.4     1635.1 |     N =    1173
+         between |             164.9097    9.36087   1069.813 |     n =      51
+         within  |             48.87655  -263.6928   727.1071 |     T =      23
+                 |                                            |
+incarc~e overall |  226.5797   178.8881         19       1913 |     N =    1173
+         between |             136.6396   59.73913   980.8696 |     n =      51
+         within  |              116.966  -424.2899    1158.71 |     T =      23
+                 |                                            |
+pb1064   overall |  5.336217   4.885688   .2482066   26.97957 |     N =    1173
+         between |             4.904879   .4780231   24.92603 |     n =      51
+         within  |             .5135176   3.119451   7.389752 |     T =      23
+                 |                                            |
+pw1064   overall |  62.94543   9.761527   21.78043   76.52575 |     N =    1173
+         between |             9.766202   24.86751   74.06575 |     n =      51
+         within  |             1.303495   58.99112   67.95798 |     T =      23
+                 |                                            |
+pm1029   overall |  16.08113   1.732143   12.21368   22.35269 |     N =    1173
+         between |             .7393875   14.19916   18.32288 |     n =      51
+         within  |             1.569678   12.72155   20.25466 |     T =      23
+                 |                                            |
+pop      overall |  4.816341   5.252115    .402753   33.14512 |     N =    1173
+         between |             5.259351   .4739457   28.11234 |     n =      51
+         within  |             .6657071  -.9435976   9.849123 |     T =      23
+                 |                                            |
+avginc   overall |   13.7248   2.554543   8.554884   23.64671 |     N =    1173
+         between |              2.05518   9.972052   18.82278 |     n =      51
+         within  |             1.543116   9.329032   18.65322 |     T =      23
+                 |                                            |
+density  overall |  .3520382   1.355472   .0007071   11.10212 |     N =    1173
+         between |             1.364854   .0009259   9.773243 |     n =      51
+         within  |             .0971811  -.9130092   1.680911 |     T =      23
+                 |                                            |
+stateid  overall |  28.96078   15.68352          1         56 |     N =    1173
+         between |             15.83283          1         56 |     n =      51
+         within  |                    0   28.96078   28.96078 |     T =      23
+                 |                                            |
+shall    overall |  .2429668   .4290581          0          1 |     N =    1173
+         between |             .3031251          0          1 |     n =      51
+         within  |             .3064814  -.5396419   1.112532 |     T =      23
+                 |                                            |
+ln_vio~e overall |  6.027293   .6456943   3.850147   7.979955 |     N =    1173
+         between |             .6268226   4.201971   7.600531 |     n =      51
+         within  |              .177172   5.511784   6.669583 |     T =      23
+                 |                                            |
+stt1     overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt2     overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt3     overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt4     overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt5     overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt6     overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt7     overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt8     overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt9     overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt10    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt11    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt12    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt13    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt14    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt15    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt16    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt17    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt18    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt19    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt20    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt21    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt22    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt23    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt24    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt25    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt26    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt27    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt28    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt29    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt30    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt31    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt32    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt33    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt34    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt35    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt36    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt37    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt38    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt39    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt40    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt41    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt42    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt43    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt44    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt45    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt46    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt47    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt48    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt49    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt50    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
+                 |                                            |
+stt51    overall |  .0196078   .1387075          0          1 |     N =    1173
+         between |              .140028          0          1 |     n =      51
+         within  |                    0   .0196078   .0196078 |     T =      23
 
 . xtreg ln_violence shall $reg_variables, fe vce(cluster stateid);
 
@@ -639,8 +453,8 @@ corr(u_i, Xb)  = -0.3687                        Prob > F          =     0.0000
          rho |  .94712779   (fraction of variance due to u_i)
 ------------------------------------------------------------------------------
 
-. /* This regression is more credible because its adjusted r-squared is signif
-> icantly higher */
+. /* This regression is more credible because its adjusted r-squared is significant
+> ly higher */
 > 
 > /* hausman test */
 > xtreg ln_violence shall $reg_variables, fe;
@@ -769,8 +583,8 @@ corr(u_i, X)   = 0 (assumed)                    Prob > chi2       =     0.0000
 ------------+-----------------------------------
       Total |      1,173      100.00
 
-. global year_vars = "yr1 yr2 yr3 yr4 yr5 yr6 yr7 yr8 yr9 yr10 yr11 yr12 yr13 
-> yr14 yr15 yr16 yr17 yr18 yr19 yr20 yr21 yr22";
+. global year_vars = "yr1 yr2 yr3 yr4 yr5 yr6 yr7 yr8 yr9 yr10 yr11 yr12 yr13 yr14 
+> yr15 yr16 yr17 yr18 yr19 yr20 yr21 yr22";
 
 . reg ln_violence shall $year_vars $reg_variables $statevars, r;
 
@@ -956,9 +770,8 @@ corr(u_i, Xb)  = -0.2929                        Prob > F          =     0.0000
          rho |  .95770338   (fraction of variance due to u_i)
 ------------------------------------------------------------------------------
 
-. /* p value is 0 for f test when we add the year variables. Additionally, the
->  r-squared value is 95%. Because of this, this regression is more credible.*
-> /
+. /* p value is 0 for f test when we add the year variables. Additionally, the r-sq
+> uared value is 95%. Because of this, this regression is more credible.*/
 > /*d*/
 > 
 > gen ln_rob = ln(rob);
@@ -1079,12 +892,11 @@ F test that all u_i=0: F(50, 1092) = 76.86                   Prob > F = 0.0000
 
 . hausman fe_ln_rob fe_ln_mur;
 
-Note: the rank of the differenced variance matrix (29) does not equal the
-        number of coefficients being tested (30); be sure this is what you
-        expect, or there may be problems computing the test.  Examine the
-        output of your estimators for anything unexpected and possibly
-        consider scaling your variables so that the coefficients are on a
-        similar scale.
+Note: the rank of the differenced variance matrix (29) does not equal the number of
+        coefficients being tested (30); be sure this is what you expect, or there
+        may be problems computing the test.  Examine the output of your estimators
+        for anything unexpected and possibly consider scaling your variables so
+        that the coefficients are on a similar scale.
 
                  ---- Coefficients ----
              |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
@@ -1133,18 +945,19 @@ Note: the rank of the differenced variance matrix (29) does not equal the
                                         see suest for a generalized test
 
 . /*e*/
-> /* one of the greatest concerns for this model remains in variables that var
-> y significantly across states but vary little within a state over time. As m
-> entioned above, this may be perceptions of guns and gun usage across states,
->  etc...*/
+> /* one of the greatest concerns for the validity of this model remain in variable
+> s that vary significantly across states but vary little within a state over time.
+>  As mentioned above, this may be perceptions of guns and gun usage across states 
+> (like Texas vs. Delaware or Rhode Island), etc...*/
 > 
 > /*f*/
-> /**/
+> /* the effects of concealed-weapon laws on crime rates vary state-by-state and ov
+> er time so these results are inconclusive.*/
 > 
 > 
 > log close;
       name:  <unnamed>
        log:  \\apporto.com\dfs\DVD\Users\damurphy_dvd\Desktop\Lab7\lab07.txt
   log type:  text
- closed on:  10 Nov 2020, 07:06:27
-------------------------------------------------------------------------------
+ closed on:  10 Nov 2020, 10:36:44
+-----------------------------------------------------------------------------------
