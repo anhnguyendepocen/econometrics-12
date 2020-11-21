@@ -1,0 +1,488 @@
+------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\apporto.com\dfs\DVD\Users\damurphy_dvd\Desktop\Lab 8\lab0
+> 8.txt
+  log type:  text
+ opened on:  15 Nov 2020, 08:29:39
+
+. use coke.dta;
+
+. /*linear probability model*/
+> reg coke c.pratio i.disp_coke i.disp_pepsi, r;
+
+Linear regression                               Number of obs     =     
+>  1,140
+                                                F(3, 1136)        =     
+>  57.07
+                                                Prob > F          =     
+> 0.0000
+                                                R-squared         =     
+> 0.1201
+                                                Root MSE          =     
+> .46724
+
+------------------------------------------------------------------------
+> ------
+             |               Robust
+        coke |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Int
+> erval]
+-------------+----------------------------------------------------------
+> ------
+      pratio |  -.4008614   .0603727    -6.64   0.000    -.5193159   -.2
+> 824069
+ 1.disp_coke |   .0771745   .0339319     2.27   0.023     .0105982    .1
+> 437507
+1.disp_pepsi |  -.1656637   .0343648    -4.82   0.000    -.2330893   -.0
+> 982381
+       _cons |   .8902151   .0653014    13.63   0.000     .7620901     1
+> .01834
+------------------------------------------------------------------------
+> ------
+
+. margins, dydx(*);
+
+Average marginal effects                        Number of obs     =     
+>  1,140
+Model VCE    : Robust
+
+Expression   : Linear prediction, predict()
+dy/dx w.r.t. : pratio 1.disp_coke 1.disp_pepsi
+
+------------------------------------------------------------------------
+> ------
+             |            Delta-method
+             |      dy/dx   Std. Err.      t    P>|t|     [95% Conf. Int
+> erval]
+-------------+----------------------------------------------------------
+> ------
+      pratio |  -.4008614   .0603727    -6.64   0.000    -.5193159   -.2
+> 824069
+ 1.disp_coke |   .0771745   .0339319     2.27   0.023     .0105982    .1
+> 437507
+1.disp_pepsi |  -.1656637   .0343648    -4.82   0.000    -.2330893   -.0
+> 982381
+------------------------------------------------------------------------
+> ------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. margins, dydx(*) atmeans;
+
+Conditional marginal effects                    Number of obs     =     
+>  1,140
+Model VCE    : Robust
+
+Expression   : Linear prediction, predict()
+dy/dx w.r.t. : pratio 1.disp_coke 1.disp_pepsi
+at           : pratio          =    1.027249 (mean)
+               0.disp_coke     =    .6210526 (mean)
+               1.disp_coke     =    .3789474 (mean)
+               0.disp_pepsi    =    .6359649 (mean)
+               1.disp_pepsi    =    .3640351 (mean)
+
+------------------------------------------------------------------------
+> ------
+             |            Delta-method
+             |      dy/dx   Std. Err.      t    P>|t|     [95% Conf. Int
+> erval]
+-------------+----------------------------------------------------------
+> ------
+      pratio |  -.4008614   .0603727    -6.64   0.000    -.5193159   -.2
+> 824069
+ 1.disp_coke |   .0771745   .0339319     2.27   0.023     .0105982    .1
+> 437507
+1.disp_pepsi |  -.1656637   .0343648    -4.82   0.000    -.2330893   -.0
+> 982381
+------------------------------------------------------------------------
+> ------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. /*probit model*/
+> /*marginal effect at the means*/
+> probit coke c.pratio i.disp_coke i.disp_pepsi, r;
+
+Iteration 0:   log pseudolikelihood = -783.86028  
+Iteration 1:   log pseudolikelihood = -711.02196  
+Iteration 2:   log pseudolikelihood = -710.94858  
+Iteration 3:   log pseudolikelihood = -710.94858  
+
+Probit regression                               Number of obs     =     
+>  1,140
+                                                Wald chi2(3)      =     
+> 107.31
+                                                Prob > chi2       =     
+> 0.0000
+Log pseudolikelihood = -710.94858               Pseudo R2         =     
+> 0.0930
+
+------------------------------------------------------------------------
+> ------
+             |               Robust
+        coke |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Int
+> erval]
+-------------+----------------------------------------------------------
+> ------
+      pratio |  -1.145963   .1986229    -5.77   0.000    -1.535256    -.
+> 756669
+ 1.disp_coke |    .217187   .0953536     2.28   0.023     .0302974    .4
+> 040765
+1.disp_pepsi |   -.447297   .1001581    -4.47   0.000    -.6436033   -.2
+> 509908
+       _cons |    1.10806    .205349     5.40   0.000     .7055831    1.
+> 510536
+------------------------------------------------------------------------
+> ------
+
+. margins, dydx(*);
+
+Average marginal effects                        Number of obs     =     
+>  1,140
+Model VCE    : Robust
+
+Expression   : Pr(coke), predict()
+dy/dx w.r.t. : pratio 1.disp_coke 1.disp_pepsi
+
+------------------------------------------------------------------------
+> ------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Int
+> erval]
+-------------+----------------------------------------------------------
+> ------
+      pratio |  -.4096951   .0668105    -6.13   0.000    -.5406411    -.
+> 278749
+ 1.disp_coke |   .0782515   .0344334     2.27   0.023     .0107632    .1
+> 457398
+1.disp_pepsi |  -.1632321   .0361748    -4.51   0.000    -.2341333   -.0
+> 923309
+------------------------------------------------------------------------
+> ------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. margins, dydx(*) atmeans;
+
+Conditional marginal effects                    Number of obs     =     
+>  1,140
+Model VCE    : Robust
+
+Expression   : Pr(coke), predict()
+dy/dx w.r.t. : pratio 1.disp_coke 1.disp_pepsi
+at           : pratio          =    1.027249 (mean)
+               0.disp_coke     =    .6210526 (mean)
+               1.disp_coke     =    .3789474 (mean)
+               0.disp_pepsi    =    .6359649 (mean)
+               1.disp_pepsi    =    .3640351 (mean)
+
+------------------------------------------------------------------------
+> ------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Int
+> erval]
+-------------+----------------------------------------------------------
+> ------
+      pratio |  -.4520817     .07805    -5.79   0.000    -.6050569   -.2
+> 991066
+ 1.disp_coke |   .0858221   .0376523     2.28   0.023      .012025    .1
+> 596192
+1.disp_pepsi |   -.173156   .0376479    -4.60   0.000    -.2469446   -.0
+> 993673
+------------------------------------------------------------------------
+> ------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. sum pratio;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      pratio |      1,140    1.027249     .286608    .497207   2.324675
+
+. scalar mpratio = r(mean);
+
+. sum disp_pepsi;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+  disp_pepsi |      1,140    .3640351    .4813697          0          1
+
+. scalar mdisppepsi = r(mean);
+
+. sum disp_coke;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+   disp_coke |      1,140    .3789474    .4853379          0          1
+
+. scalar mdispcoke = r(mean);
+
+. scalar mango = _b[_cons] + _b[pratio]*mpratio + _b[1.disp_coke]*mdispc
+> oke + _b[1.disp_pepsi]*mdisppepsi;
+
+. display "The marginal efect at the mean for pratio is" normalden(mango
+> )*_b[pratio];
+The marginal efect at the mean for pratio is-.45208175
+
+. /*marginal effect at the means for disp_coke*/
+> scalar apples1 = _b[_cons] + _b[pratio]*mpratio + _b[1.disp_coke]*1 + 
+> _b[1.disp_pepsi]*mdisppepsi;
+
+. scalar apples0 = _b[_cons] + _b[pratio]*mpratio + _b[1.disp_coke]*0 + 
+> _b[1.disp_pepsi]*mdisppepsi;
+
+. display apples1 apples0;
+-.01477366-.23196063
+
+. display "the predicted y-hat when disp_coke = 1 is " normal(apples1);
+the predicted y-hat when disp_coke = 1 is .49410638
+
+. display "the predicted y-hat when disp_coke = 0 is " normal(apples0);
+the predicted y-hat when disp_coke = 0 is .40828429
+
+. display "the marginal effct of disp_coe when x's are at their means is
+>  " normal(apples1)-normal(apples0);
+the marginal effct of disp_coe when x's are at their means is .08582208
+
+. /*average marginal effects for pratio*/
+> generate kiwi = normalden(_b[_cons] + _b[pratio]*pratio + _b[1.disp_co
+> ke]*disp_coke + _b[1.disp_pepsi]*disp_pepsi)*_b[pratio];
+
+. sum kiwi;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        kiwi |      1,140   -.4096951    .0667242  -.4569719  -.0614731
+
+. display "the average marginal effect is " r(mean);
+the average marginal effect is -.40969506
+
+. /*average marginal effects for disp_coke*/
+> generate strawbs1 = _b[_cons] + _b[pratio]*pratio + _b[1.disp_coke]*1 
+> + _b[1.disp_pepsi]*disp_pepsi;
+
+. generate strawbs0 = _b[_cons] + _b[pratio]*pratio + _b[1.disp_coke]*0 
+> + _b[1.disp_pepsi]*disp_pepsi;
+
+. generate zstrawbs1 = normal(strawbs1);
+
+. generate zstrawbs0 = normal(strawbs0);
+
+. sum zstrawbs1;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+   zstrawbs1 |      1,140      .49748    .1675796   .0370463   .7750153
+
+.  scalar zzstrawbs1 = r(mean);
+
+. sum zstrawbs0;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+   zstrawbs0 |      1,140    .4192285    .1610806   .0225764   .7048078
+
+.  scalar zzstrawbs0 = r(mean);
+
+. display "the average marginal effect of disp_cokel " zzstrawbs1 - zzst
+> rawbs0;
+the average marginal effect of disp_cokel .0782515
+
+. /*logit model*/
+> logit coke c.pratio i.disp_coke i.disp_pepsi, r;
+
+Iteration 0:   log pseudolikelihood = -783.86028  
+Iteration 1:   log pseudolikelihood = -709.88053  
+Iteration 2:   log pseudolikelihood = -709.44642  
+Iteration 3:   log pseudolikelihood = -709.44614  
+Iteration 4:   log pseudolikelihood = -709.44614  
+
+Logistic regression                             Number of obs     =     
+>  1,140
+                                                Wald chi2(3)      =     
+>  99.91
+                                                Prob > chi2       =     
+> 0.0000
+Log pseudolikelihood = -709.44614               Pseudo R2         =     
+> 0.0949
+
+------------------------------------------------------------------------
+> ------
+             |               Robust
+        coke |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Int
+> erval]
+-------------+----------------------------------------------------------
+> ------
+      pratio |  -1.995742   .3360997    -5.94   0.000    -2.654485   -1.
+> 336999
+ 1.disp_coke |   .3515994   .1556601     2.26   0.024     .0465113    .6
+> 566875
+1.disp_pepsi |  -.7309859   .1654019    -4.42   0.000    -1.055168   -.4
+> 068041
+       _cons |   1.922972   .3437525     5.59   0.000      1.24923    2.
+> 596715
+------------------------------------------------------------------------
+> ------
+
+. margins, dydx(*);
+
+Average marginal effects                        Number of obs     =     
+>  1,140
+Model VCE    : Robust
+
+Expression   : Pr(coke), predict()
+dy/dx w.r.t. : pratio 1.disp_coke 1.disp_pepsi
+
+------------------------------------------------------------------------
+> ------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Int
+> erval]
+-------------+----------------------------------------------------------
+> ------
+      pratio |  -.4332631   .0673615    -6.43   0.000    -.5652893   -.3
+> 012369
+ 1.disp_coke |    .076899   .0340549     2.26   0.024     .0101527    .1
+> 436454
+1.disp_pepsi |  -.1625292    .036155    -4.50   0.000    -.2333916   -.0
+> 916668
+------------------------------------------------------------------------
+> ------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. margins, dydx(*) atmeans;
+
+Conditional marginal effects                    Number of obs     =     
+>  1,140
+Model VCE    : Robust
+
+Expression   : Pr(coke), predict()
+dy/dx w.r.t. : pratio 1.disp_coke 1.disp_pepsi
+at           : pratio          =    1.027249 (mean)
+               0.disp_coke     =    .6210526 (mean)
+               1.disp_coke     =    .3789474 (mean)
+               0.disp_pepsi    =    .6359649 (mean)
+               1.disp_pepsi    =    .3640351 (mean)
+
+------------------------------------------------------------------------
+> ------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Int
+> erval]
+-------------+----------------------------------------------------------
+> ------
+      pratio |  -.4905964   .0819549    -5.99   0.000    -.6512251   -.3
+> 299678
+ 1.disp_coke |   .0866536   .0383351     2.26   0.024     .0115183     .
+> 161789
+1.disp_pepsi |  -.1752066   .0380997    -4.60   0.000    -.2498807   -.1
+> 005325
+------------------------------------------------------------------------
+> ------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. /*marginal effect at the means*/
+> sum pratio;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      pratio |      1,140    1.027249     .286608    .497207   2.324675
+
+. scalar mpratio = r(mean);
+
+. sum disp_pepsi;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+  disp_pepsi |      1,140    .3640351    .4813697          0          1
+
+. scalar mdisppepsi = r(mean);
+
+. sum disp_coke;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+   disp_coke |      1,140    .3789474    .4853379          0          1
+
+. scalar mdispcoke = r(mean);
+
+. scalar mango = _b[_cons] + _b[pratio]*mpratio + _b[1.disp_coke]*mdispc
+> oke + _b[1.disp_pepsi]*mdisppepsi;
+
+. display "The marginal efect at the mean for pratio is" [exp(-mango)/((
+> 1+exp(-mango))^2)]*_b[pratio];
+The marginal efect at the mean for pratio is-.49059643
+
+. /*marginal effect at the means for disp_coke*/
+> scalar apples1 = _b[_cons] + _b[pratio]*mpratio + _b[1.disp_coke]*1 + 
+> _b[1.disp_pepsi]*mdisppepsi;
+
+. scalar apples0 = _b[_cons] + _b[pratio]*mpratio + _b[1.disp_coke]*0 + 
+> _b[1.disp_pepsi]*mdisppepsi;
+
+. display apples1 apples0;
+-.04165585-.39325524
+
+. display "the predicted y-hat when disp_coke = 1 is " 1/[1+exp(-apples1
+> )];
+the predicted y-hat when disp_coke = 1 is .48958754
+
+. display "the predicted y-hat when disp_coke = 0 is " 1/[1+exp(-apples0
+> )];
+the predicted y-hat when disp_coke = 0 is .40293392
+
+. display "the marginal effct of disp_coe when x's are at their means is
+>  " 1/[1+exp(-apples1)]-1/[1+exp(-apples0)];
+the marginal effct of disp_coe when x's are at their means is .08665363
+
+. /*average marginal effects for pratio*/
+> 
+> generate pear = [(exp(-(_b[_cons] + _b[pratio]*pratio + _b[1.disp_coke
+> ]*disp_coke + _b[1.disp_pepsi]*disp_pepsi)))/(1+(exp(-(_b[_cons] + _b[
+> pratio]*pratio + _b[1.disp_coke]*disp_coke + _b[1.disp_pepsi]*disp_pep
+> si))))^2]*_b[pratio];
+
+. sum pear;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        pear |      1,140   -.4332631    .0854584  -.4988652   -.059659
+
+. display "the average marginal effect is " r(mean);
+the average marginal effect is -.43326309
+
+. /*average marginal effects for disp_coke*/
+> 
+> generate peach1 = _b[_cons] + _b[pratio]*pratio + _b[1.disp_coke]*1 + 
+> _b[1.disp_pepsi]*disp_pepsi;
+
+. generate peach0 = _b[_cons] + _b[pratio]*pratio + _b[1.disp_coke]*0 + 
+> _b[1.disp_pepsi]*disp_pepsi;
+
+. generate logpeach1 = 1/(1+exp(-peach1));
+
+. generate logpeach0 = 1/(1+exp(-peach0));
+
+. sum logpeach1;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+   logpeach1 |      1,140    .4945928    .1731951   .0432781   .7828367
+
+.  scalar log1peach1 = r(mean);
+
+. sum logpeach0;
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+   logpeach0 |      1,140    .4176938    .1655735   .0308446   .7172123
+
+.  scalar log0peach0 = r(mean);
+
+. display "the average marginal effect of disp_coke is " log1peach1-log0
+> peach0;
+the average marginal effect of disp_coke is .07689904
+
+. log close;
+      name:  <unnamed>
+       log:  \\apporto.com\dfs\DVD\Users\damurphy_dvd\Desktop\Lab 8\lab0
+> 8.txt
+  log type:  text
+ closed on:  15 Nov 2020, 08:29:42
+------------------------------------------------------------------------
